@@ -1,19 +1,23 @@
-import aiohttp
-import asyncio
-from utils.database import Database
+import yaml
+from typing import List, Dict
 
-class NodeStatusMonitor:
+class NodeMonitor:
     def __init__(self):
-        self.endpoints = {}
-        self.backup_endpoints = {}
+        self.networks = self._load_networks()
+        self.backup_nodes = self._load_backup_nodes()
         
-    def add_network(self, network_id, endpoints):
-        self.endpoints[network_id] = endpoints
-        
-    def get_block_height(self, network_id):
-        if network_id not in self.endpoints:
-            return None
+    def _load_networks(self) -> Dict:
+        with open('config/networks.yml') as f:
+            return yaml.safe_load(f)
+            
+    def _load_backup_nodes(self) -> Dict:
+        with open('config/backup_nodes.yml') as f:
+            return yaml.safe_load(f)
+            
+    async def check_validator_status(self, chain_id: str, address: str) -> Dict:
+        # Implementation for validator status checking
+        pass
+
+    async def get_block_height(self, chain_id: str) -> int:
         # Implementation for block height checking
-        
-    def check_endpoint_health(self, endpoint):
-        # Implementation for endpoint health check
+        pass
