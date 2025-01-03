@@ -1,0 +1,11 @@
+nibiru:
+  name: "Nibiru Chain"
+  chain_id: "cataclysm-1"
+  logo_png: "https://raw.githubusercontent.com/cosmos/chain-registry/master/nibiru/images/nibiru.png"
+  rpc_endpoints:
+    - "https://rpc.nibiru.fi"
+    - "https://nibiru.rpc.kjnodes.com"
+    # Add all provided endpoints
+
+# Add all other networks (zetachain, dymension, blockx, mantrachain, kopi, lava) 
+# with their respective configurations as provided in the conversation
