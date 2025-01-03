@@ -1,0 +1,12 @@
+backup_nodes:
+  template:
+    rpc_endpoints:
+      - http://backup1:26657
+      - http://backup2:26657
+    api_endpoints:
+      - http://backup1:1317
+      - http://backup2:1317
+    seed_nodes:
+      - "id@ip:26656"
+    persistent_peers:
+      - "id@ip:26656"
