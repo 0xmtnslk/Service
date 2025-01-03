@@ -31,3 +31,27 @@ class Database:
             FOREIGN KEY (validator_id) REFERENCES validators(id)
         )""")
         self.conn.commit()
+
+    def add_user(self, user_id, username):
+        # Add user to database
+        pass
+    
+    def get_user(self, user_id):
+        # Get user info
+        pass
+        
+    def add_validator(self, user_id, network, address):
+        # Add validator for user
+        pass
+    
+    def get_user_validators(self, user_id):
+        # Get user's validators
+        pass
+    
+    def set_alert(self, user_id, alert_type, threshold):
+        # Set alert preferences
+        pass
+    
+    def get_alerts(self, user_id):
+        # Get user's alert settings
+        pass

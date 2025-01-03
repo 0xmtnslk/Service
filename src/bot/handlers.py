@@ -1,21 +1,32 @@
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import CallbackContext
 
-async def start_handler(update: Update, context: CallbackContext):
-    keyboard = [
-        [InlineKeyboardButton("Check Status", callback_data="check_status")],
-        [InlineKeyboardButton("Monitor Settings", callback_data="settings")]
-    ]
-    reply_markup = InlineKeyboardMarkup(keyboard)
-    await update.message.reply_text("Welcome to Validator Monitor Bot", reply_markup=reply_markup)
+# Command handlers
+async def start_command(update, context):
+    # Welcome message and initial setup
+    pass
 
-async def button_handler(update: Update, context: CallbackContext):
-    query = update.callback_query
-    if query.data == "check_status":
-        # Implementation for status checking
-        pass
-    elif query.data == "settings":
-        # Implementation for settings menu
-        pass
+async def register_command(update, context):
+    # User registration logic
+    pass
 
-# Add other handler implementations
+async def monitor_command(update, context):
+    # Show network selection buttons
+    pass
+
+async def settings_command(update, context):
+    # Show settings options
+    pass
+
+async def status_command(update, context):
+    # Show current monitoring status
+    pass
+
+# Button handlers
+async def network_button_handler(update, context):
+    # Handle network selection
+    pass
+
+async def monitor_action_handler(update, context):
+    # Handle monitoring actions
+    pass
