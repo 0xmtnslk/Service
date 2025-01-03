@@ -1,49 +1,11 @@
 networks:
   nibiru:
-    name: Nibiru
-    chain_id: nibiru-itn-1
-    rpc_endpoint: http://localhost:26657
-    api_endpoint: http://localhost:1317
-    logo: https://nibiru.fi/logo.png
-    
+    name: "Nibiru Chain"
+    chain_id: "cataclysm-1"
+    logo_png: "https://raw.githubusercontent.com/cosmos/chain-registry/master/nibiru/images/nibiru.png"
+    rpc_endpoint: "https://rpc.nibiru.fi"
   zetachain:
-    name: ZetaChain
-    chain_id: athens_7001-1
-    rpc_endpoint: http://localhost:26657
-    api_endpoint: http://localhost:1317
-    logo: https://zetachain.com/logo.png
-    
-  dymension:
-    name: Dymension
-    chain_id: froopyland_100-1
-    rpc_endpoint: http://localhost:26657
-    api_endpoint: http://localhost:1317
-    logo: https://dymension.xyz/logo.png
-    
-  blockx:
-    name: BlockX
-    chain_id: blockx_100-1
-    rpc_endpoint: http://localhost:26657
-    api_endpoint: http://localhost:1317
-    logo: https://blockx.network/logo.png
-    
-  mantrachain:
-    name: MantraChain
-    chain_id: mantrachain-1
-    rpc_endpoint: http://localhost:26657
-    api_endpoint: http://localhost:1317
-    logo: https://mantrachain.io/logo.png
-    
-  kopi:
-    name: Kopi
-    chain_id: kopi-1
-    rpc_endpoint: http://localhost:26657
-    api_endpoint: http://localhost:1317
-    logo: https://kopi.network/logo.png
-    
-  lava:
-    name: Lava
-    chain_id: lava-testnet-1
-    rpc_endpoint: http://localhost:26657
-    api_endpoint: http://localhost:1317
-    logo: https://lavanet.xyz/logo.png
+    name: "Zeta Chain"
+    chain_id: "zetachain_7000-1"
+    logo_png: "https://raw.githubusercontent.com/CoinHuntersTR/Logo/main/zetachain-icon.png"
+    rpc_endpoint: "https://zetachain.blockpi.network/rpc/v1/public"
