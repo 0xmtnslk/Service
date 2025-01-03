@@ -2,12 +2,16 @@ import telebot
 import yaml
 import logging
 from database import Database
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # Initialize bot and database
-bot = telebot.TeleBot("YOUR_BOT_TOKEN")
+bot = telebot.TeleBot(os.getenv('TELEGRAM_BOT_TOKEN'))
 db = Database()
 
 try:
