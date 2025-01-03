@@ -1,11 +1,21 @@
-from telegram import Update
+from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ContextTypes
-from .keyboards import get_network_keyboard, get_monitoring_keyboard, get_settings_keyboard
+from utils.database import Database
+
+db = Database()
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text(
-        "Welcome to the Node Monitoring Bot! Use /register to set up your nodes."
-    )
+    user_id = update.effective_user.id
+    db.conn.execute("INSERT OR IGNORE INTO users (user_id) VALUES (?)", (user_id,))
+    db.conn.commit()
+    
+    keyboard = [
+        [InlineKeyboardButton("Register Validator", callback_data="register_validator")],
+        [InlineKeyboardButton("View Validators", callback_data="view_validators")],
+        [InlineKeyboardButton("Alert Settings", callback_data="alert_settings")]
+    ]
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    await update.message.reply_text("Welcome to Validator Monitor Bot!", reply_markup=reply_markup)
 
 async def register(update: Update, context: ContextTypes.DEFAULT_TYPE):
     keyboard = get_network_keyboard()

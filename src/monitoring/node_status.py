@@ -1,29 +1,28 @@
-import logging
-import requests
-from typing import Dict, Optional
-
-logger = logging.getLogger(__name__)
+import aiohttp
+import asyncio
+from utils.database import Database
 
 class NodeMonitor:
     def __init__(self):
-        self.nodes: Dict[str, Dict] = {}
+        self.db = Database()
         
-    def add_node(self, chain_id: str, rpc_endpoint: str):
-        self.nodes[chain_id] = {
-            'rpc_endpoint': rpc_endpoint,
-            'status': None
-        }
+    async def check_validator_status(self, network: str, valoper_address: str):
+        # Get RPC endpoints from config
+        rpc_endpoints = self.get_network_endpoints(network)
         
-    def check_node_status(self, chain_id: str) -> Optional[Dict]:
-        if chain_id not in self.nodes:
-            logger.error(f"Chain {chain_id} not found")
-            return None
-            
-        try:
-            response = requests.get(f"{self.nodes[chain_id]['rpc_endpoint']}/status")
-            status = response.json()
-            self.nodes[chain_id]['status'] = status
-            return status
-        except Exception as e:
-            logger.error(f"Error checking node status: {str(e)}")
-            return None
+        for endpoint in rpc_endpoints:
+            try:
+                async with aiohttp.ClientSession() as session:
+                    # Check validator status
+                    status = await self.get_validator_status(session, endpoint, valoper_address)
+                    # Check block height
+                    height = await self.get_block_height(session, endpoint)
+                    return {"status": status, "height": height}
+            except Exception as e:
+                continue
+        return {"status": "error", "height": 0}
+    
+    async def get_validator_status(self, session, endpoint: str, valoper_address: str):
+        async with session.get(f"{endpoint}/validators") as response:
+            data = await response.json()
+            return data
