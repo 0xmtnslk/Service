@@ -1,27 +1,21 @@
-import asyncio
-import logging
-from bot.handlers import setup_handlers
-from monitoring.node_status import NodeMonitor
-from monitoring.alerts import AlertManager
-from monitoring.metrics import MetricsCollector
-from utils.database import Database
+from telegram.ext import Application, CommandHandler, CallbackQueryHandler
+from bot.handlers import *
 
-async def main():
-    logging.basicConfig(level=logging.INFO)
+def main():
+    application = Application.builder().token(BOT_TOKEN).build()
     
-    # Initialize components
-    db = Database()
-    node_monitor = NodeMonitor()
-    alert_manager = AlertManager()
-    metrics_collector = MetricsCollector()
+    # Add command handlers
+    application.add_handler(CommandHandler("start", start_command))
+    application.add_handler(CommandHandler("register", register_command))
+    application.add_handler(CommandHandler("monitor", monitor_command))
+    application.add_handler(CommandHandler("settings", settings_command))
+    application.add_handler(CommandHandler("status", status_command))
     
-    # Setup bot and handlers
-    bot = setup_handlers()
+    # Add button handlers
+    application.add_handler(CallbackQueryHandler(network_button_handler, pattern="^network_"))
+    application.add_handler(CallbackQueryHandler(monitor_action_handler, pattern="^monitor_"))
     
-    try:
-        await bot.polling(non_stop=True)
-    except Exception as e:
-        logging.error(f"Bot error: {e}")
+    application.run_polling()
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    main()
