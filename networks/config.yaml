@@ -74,11 +74,11 @@ nibiru:
   blockx:
     name: "Blockx"
     chain_id: "blockx_19191-1"
-    rpc_endpoints:
     logo_png: "https://pbs.twimg.com/profile_images/1571914336288776193/HmxJDHvF_400x400.jpg"
+    rpc_endpoints:
       - "https://rpc-blockx.nodeist.net"
       - "https://blockx_mainnet_rpc.chain.whenmoonwhenlambo.money"
-      - "https://blockx-mainnet-rpc.itrocket.net" 
+      - "https://blockx-mainnet-rpc.itrocket.net"
 
   mantrachain:
     name: "Mantra Chain"
