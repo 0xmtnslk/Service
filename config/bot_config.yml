@@ -1,16 +1,8 @@
-bot:
-  settings:
-    default_monitoring_interval: 300  # 5 minutes
-    max_alerts_per_hour: 10
-    alert_cooldown: 300  # 5 minutes
-    
-  alert_thresholds:
-    missed_blocks: 5
-    sync_behind_blocks: 100
-    peer_count_min: 3
-    
-  monitoring:
-    intervals:
-      quick: 60
-      normal: 300
-      relaxed: 900
+telegram:
+  api_key: ""  # Add your Telegram bot API key
+  admin_users: []  # Add admin user IDs
+
+monitoring:
+  check_interval: 60  # seconds
+  alert_threshold: 5  # blocks
+  health_check_interval: 300  # seconds

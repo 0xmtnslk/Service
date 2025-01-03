@@ -1,12 +1,11 @@
 backup_nodes:
   template:
     rpc_endpoints:
-      - http://backup1:26657
-      - http://backup2:26657
-    api_endpoints:
-      - http://backup1:1317
-      - http://backup2:1317
-    seed_nodes:
-      - "id@ip:26656"
-    persistent_peers:
-      - "id@ip:26656"
+      nibiru:
+        - "https://nibiru.rpc.kjnodes.com"
+        - "https://rpc.nibiru.nodestake.org"
+        - "https://rpc.lavenderfive.com:443/nibiru"
+      zetachain:
+        - "https://zetachain-mainnet-archive.allthatnode.com:26657"
+        - "https://rpc.lavenderfive.com:443/zetachain"
+        - "https://rpc.zetachain.nodestake.org"
