@@ -5,24 +5,19 @@ class Database:
     def __init__(self):
         self.fernet = Fernet(DATABASE_ENCRYPTION_KEY)
         
-    def init_tables(self):
-        self.execute("""
-            CREATE TABLE IF NOT EXISTS users (
+    def create_tables(self):
+        # Add tables for user preferences and metrics
+        db.execute("""
+            CREATE TABLE IF NOT EXISTS user_preferences (
                 user_id INTEGER PRIMARY KEY,
-                is_admin BOOLEAN,
-                alert_preferences TEXT
+                alert_threshold INTEGER,
+                validators TEXT,
+                networks TEXT
             )
         """)
-        
-        self.execute("""
-            CREATE TABLE IF NOT EXISTS validators (
-                id INTEGER PRIMARY KEY,
-                chain_id TEXT,
-                valoper_address TEXT,
-                user_id INTEGER,
-                FOREIGN KEY (user_id) REFERENCES users (user_id)
-            )
-        """)
+
+    def save_user_preferences(self, user_id, threshold, validators, networks):
+        # Implementation for saving user preferences
 
     def add_user(self, user_id, username):
         # Add user to database
