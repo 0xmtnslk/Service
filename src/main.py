@@ -1,20 +1,19 @@
-from telegram.ext import Application, CommandHandler
-from bot.handlers import start, register, monitor, settings, status
-from dotenv import load_dotenv
-import os
+import logging
+from bot.handlers import setup_handlers
+from monitoring.alerts import AlertManager
+from monitoring.node_status import NodeMonitor
+from monitoring.metrics import MetricsCollector
 
-load_dotenv()
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 def main():
-    app = Application.builder().token(os.getenv('BOT_TOKEN')).build()
+    alert_manager = AlertManager()
+    node_monitor = NodeMonitor()
+    metrics = MetricsCollector()
     
-    app.add_handler(CommandHandler('start', start))
-    app.add_handler(CommandHandler('register', register))
-    app.add_handler(CommandHandler('monitor', monitor))
-    app.add_handler(CommandHandler('settings', settings))
-    app.add_handler(CommandHandler('status', status))
-    
-    app.run_polling()
+    # Setup and start bot handlers
+    setup_handlers(alert_manager, node_monitor, metrics)
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
