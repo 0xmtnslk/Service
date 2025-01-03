@@ -1,0 +1,35 @@
+networks:
+  nibiru:
+    chain_id: nibiru-itn-1
+    rpc_endpoint: http://localhost:26657
+    api_endpoint: http://localhost:1317
+    
+  zetachain:
+    chain_id: athens_7001-1
+    rpc_endpoint: http://localhost:26657
+    api_endpoint: http://localhost:1317
+    
+  dymension:
+    chain_id: froopyland_100-1
+    rpc_endpoint: http://localhost:26657
+    api_endpoint: http://localhost:1317
+    
+  blockx:
+    chain_id: blockx_100-1
+    rpc_endpoint: http://localhost:26657
+    api_endpoint: http://localhost:1317
+    
+  mantrachain:
+    chain_id: mantrachain-1
+    rpc_endpoint: http://localhost:26657
+    api_endpoint: http://localhost:1317
+    
+  kopi:
+    chain_id: kopi-1
+    rpc_endpoint: http://localhost:26657
+    api_endpoint: http://localhost:1317
+    
+  lava:
+    chain_id: lava-testnet-1
+    rpc_endpoint: http://localhost:26657
+    api_endpoint: http://localhost:1317

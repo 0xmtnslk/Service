@@ -1,0 +1,5 @@
+python-telegram-bot==20.7
+pyyaml
+requests
+prometheus_client
+python-dotenv
