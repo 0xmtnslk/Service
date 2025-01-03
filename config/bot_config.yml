@@ -1,8 +1,0 @@
-telegram:
-  api_key: ""  # Add your Telegram bot API key
-  admin_users: []  # Add admin user IDs
-
-monitoring:
-  check_interval: 60  # seconds
-  alert_threshold: 5  # blocks
-  health_check_interval: 300  # seconds
