@@ -1,36 +1,28 @@
-import sqlite3
+from cryptography.fernet import Fernet
+from src.utils.config import DATABASE_ENCRYPTION_KEY
 
 class Database:
-    def __init__(self, db_path="data/monitor.db"):
-        self.conn = sqlite3.connect(db_path)
-        self.create_tables()
-    
-    def create_tables(self):
-        self.conn.execute("""
-        CREATE TABLE IF NOT EXISTS users (
-            user_id INTEGER PRIMARY KEY,
-            username TEXT,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        )""")
+    def __init__(self):
+        self.fernet = Fernet(DATABASE_ENCRYPTION_KEY)
         
-        self.conn.execute("""
-        CREATE TABLE IF NOT EXISTS validators (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            user_id INTEGER,
-            network TEXT,
-            valoper_address TEXT,
-            FOREIGN KEY (user_id) REFERENCES users(user_id)
-        )""")
+    def init_tables(self):
+        self.execute("""
+            CREATE TABLE IF NOT EXISTS users (
+                user_id INTEGER PRIMARY KEY,
+                is_admin BOOLEAN,
+                alert_preferences TEXT
+            )
+        """)
         
-        self.conn.execute("""
-        CREATE TABLE IF NOT EXISTS alerts (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            validator_id INTEGER,
-            alert_type TEXT,
-            threshold INTEGER,
-            FOREIGN KEY (validator_id) REFERENCES validators(id)
-        )""")
-        self.conn.commit()
+        self.execute("""
+            CREATE TABLE IF NOT EXISTS validators (
+                id INTEGER PRIMARY KEY,
+                chain_id TEXT,
+                valoper_address TEXT,
+                user_id INTEGER,
+                FOREIGN KEY (user_id) REFERENCES users (user_id)
+            )
+        """)
 
     def add_user(self, user_id, username):
         # Add user to database

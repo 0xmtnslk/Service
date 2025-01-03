@@ -1,0 +1,10 @@
+chains:
+  {{chain_name}}:
+    chain_id: {{chain_id}}
+    valoper_address: {{valoper_address}}
+    alerts:
+      missed_blocks: true
+      health_check: true
+      stalled_height: true
+    nodes:
+      {{rpc_endpoints}}
