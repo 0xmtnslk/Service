@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    environment:
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+    volumes:
+      - ./config:/app/config
+    depends_on:
+      - tenderduty
+
+  tenderduty:
+    build:
+      context: .
+      dockerfile: Dockerfile.tenderduty
+    volumes:
+      - ./config:/var/lib/tenderduty/config
+    ports:
+      - "8888:8888"
+      - "28686:28686"

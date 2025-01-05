@@ -1,5 +1,6 @@
 fastapi
 pydantic
-python-telegram-bot
+python-telegram-bot==13.7
 pyyaml
 uvicorn
+requests

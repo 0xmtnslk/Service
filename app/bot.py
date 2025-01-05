@@ -1,39 +1,29 @@
-from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
-from telegram.ext import ApplicationBuilder, CommandHandler, CallbackQueryHandler, ContextTypes
-import yaml
 import os
+import yaml
+import telegram
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
+from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
+from tenderduty_config import generate_config
 
-with open("app/networks.yaml") as f:
-    NETWORKS = yaml.safe_load(f)["networks"]
-
-async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+def start(update: Update, context: CallbackContext):
     keyboard = []
-    for net_id, net_data in NETWORKS.items():
-        keyboard.append([InlineKeyboardButton(
-            net_data["name"], 
-            callback_data=f"network_{net_id}"
-        )])
-
+    with open("networks.yaml") as f:
+        networks = yaml.safe_load(f)["networks"]
+        for network_id, network in networks.items():
+            keyboard.append([InlineKeyboardButton(network["name"], callback_data=f"network_{network_id}")])
+    
     reply_markup = InlineKeyboardMarkup(keyboard)
-    await update.message.reply_text(
-        "Welcome! Please select a network:",
-        reply_markup=reply_markup
-    )
-
-async def network_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    query = update.callback_query
-    network = query.data.split("_")[1]
-    context.user_data["selected_network"] = network
-    await query.message.reply_text(
-        f"Selected network: {NETWORKS[network]['name']}\n"
-        "Please enter your validator address (valoper...):"
-    )
+    update.message.reply_text("Please select a network:", reply_markup=reply_markup)
 
 def main():
-    app = ApplicationBuilder().token(os.getenv("TELEGRAM_BOT_TOKEN")).build()
-    app.add_handler(CommandHandler("start", start))
-    app.add_handler(CallbackQueryHandler(network_callback, pattern="^network_"))
-    app.run_polling()
+    token = os.environ["TELEGRAM_BOT_TOKEN"]
+    updater = Updater(token)
+    dispatcher = updater.dispatcher
+    
+    dispatcher.add_handler(CommandHandler("start", start))
+    
+    updater.start_polling()
+    updater.idle()
 
 if __name__ == "__main__":
     main()
