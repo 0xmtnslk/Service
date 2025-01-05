@@ -1,0 +1,14 @@
+FROM golang:1.19-alpine AS builder
+RUN apk add --no-cache git
+WORKDIR /app
+RUN git clone https://github.com/blockpane/tenderduty
+WORKDIR /app/tenderduty
+RUN go install
+
+FROM alpine:latest
+RUN addgroup --system tenderduty && \
+    adduser --system --ingroup tenderduty tenderduty
+COPY --from=builder /go/bin/tenderduty /usr/local/bin/
+USER tenderduty
+WORKDIR /var/lib/tenderduty
+CMD ["tenderduty"]

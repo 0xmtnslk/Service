@@ -1,7 +1,11 @@
 import yaml
-import os
 
-def generate_tenderduty_config(validator_config):
+def generate_config(network_id: str, valoper_address: str):
+    with open("networks.yaml") as f:
+        networks = yaml.safe_load(f)
+    
+    network = networks["networks"][network_id]
+    
     config = {
         "enable_dashboard": True,
         "listen_port": 8888,
@@ -9,33 +13,13 @@ def generate_tenderduty_config(validator_config):
         "node_down_alert_minutes": 3,
         "prometheus_enabled": True,
         "prometheus_listen_port": 28686,
-        "telegram": {
-            "enabled": True,
-            "api_key": os.getenv("TELEGRAM_BOT_TOKEN"),
-            "chat_id": validator_config.telegram_id
-        },
         "chains": {
-            validator_config.network: {
-                "chain_id": networks[validator_config.network].chain_id,
-                "valoper_address": validator_config.valoper_address,
-                "public_fallback": True,
-                "alerts": {
-                    "stalled_enabled": True,
-                    "stalled_minutes": 10,
-                    "consecutive_enabled": True,
-                    "consecutive_missed": 1,
-                    "percentage_enabled": True,
-                    "percentage_missed": 10,
-                    "alert_if_inactive": True,
-                    "alert_if_no_servers": True
-                },
-                "nodes": [
-                    {"url": url, "alert_if_down": False}
-                    for url in networks[validator_config.network].rpc_endpoints
-                ]
+            network["name"]: {
+                "chain_id": network["chain_id"],
+                "valoper_address": valoper_address,
+                "nodes": [{"url": url, "alert_if_down": False} for url in network["rpc_endpoints"]]
             }
         }
     }
-
-    with open("config.yml", "w") as f:
-        yaml.dump(config, f)
+    
+    return yaml.dump(config)
